@@ -1,5 +1,5 @@
 close all;
-bitsNumber = 10000;
+bitsNumber = 100000;
 signalFreq = 1;
 samplingFreq = 25;
 bits = randi([0 1],bitsNumber,1);
@@ -41,7 +41,5 @@ end
 figure;
 semilogy(E_N0, ber1, E_N0, ber2, E_N0, ber3);
 set(legend('$Matched\ filter\ h_{1}(t)$','$h_{2}(t)=\delta(t)$','$h_{3}(t)=\sqrt{3}\ t$'),'Interpreter','latex');
-set(xlabel('$(E_b/N_0) dB$'),'Interpreter','latex') ;
-
-
-
+xlabel({'\(E_b/N_0\), dB'},'Interpreter','latex');
+ylabel({'Probability of error, \(P_e\)'},'Interpreter','latex');
