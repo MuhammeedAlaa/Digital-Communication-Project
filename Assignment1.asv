@@ -1,7 +1,7 @@
 close all;
 bitsNumber = 10000;
 signalFreq = 1;
-samplingFreq = 25;
+samplingFreq = 3;
 bits = randi([0 1],bitsNumber,1);
 ber1 = [];
 ber2 = [];
@@ -33,15 +33,14 @@ for snr = -10:21
     y2(y2 > 0 ) = 1;
     y3(y3 <= 0 ) = 0;
     y3(y3 > 0 ) = 1;
-    ber1(end+1) = sum(abs(y1' - bits) / length(bits));
-    ber2(end+1) = sum(abs(y2' - bits) / length(bits));
-    ber3(end+1) = sum(abs(y3' - bits) / length(bits));
+    [ber1(end+1), ratio] = biterr(y1',bits);
+    [ber2(end+1), ratio] = biterr(y2',bits);
+    [ber3(end+1), ratio] = biterr(y3',bits);
     E_N0(end+1) = snr;
 end
 figure;
-semilogy(E_N0, ber1, E_N0, ber2, E_N0, ber3);
-set(legend('$Matched\ filter\ h_{1}(t)$','$h_{2}(t)=\delta(t)$','$h_{3}(t)=\sqrt{3}\ t$'),'Interpreter','latex');
-set(xlabel('$(E_b/N_0) dB$'),'Interpreter','latex') ;
-
-
-
+plot(ber1, E_N0);
+figure;
+plot(E_N0, ber3);
+figure;
+plot(E_N0, ber2);
